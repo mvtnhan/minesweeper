@@ -1,3 +1,11 @@
+html,
+body,
+body > div {
+  height: 100%;
+  margin: 0;
+  position: relative !important;
+}
+
 .App {
   text-align: center;
 }
