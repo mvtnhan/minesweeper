@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-
+import useTimer from "../hooks/useTime";
+// import formatTime from "../util/formatTime";
 import createBoard from "../util/createBoard";
 import Cell from "./Cell";
 import revealed from "../util/reveal";
 import TopBar from "./TopBar";
 import Modal from "./Modal";
 import { BOARD_GAME } from "../util/constants";
+import { audioRevealed, audioGameOver, audioGameWin } from "../util/audio";
 
 const Board = () => {
   const [board, setBoard] = useState([]);
@@ -14,9 +16,11 @@ const Board = () => {
   const [nonMinesCount, setNonMinesCount] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [restart, setRestart] = useState(false);
-  const [newTime, setTime] = useState(0);
   const [gameWin, setGameWin] = useState(false);
   const [level, setOnLevelChange] = useState("Medium");
+  const [volume, setVolume] = useState(true);
+
+  const { timer, start, handlePaused, handleReset } = useTimer(0);
 
   useEffect(() => {
     // Creating a board
@@ -33,11 +37,11 @@ const Board = () => {
           BOARD_GAME[level].numBomb
       );
       setBoard(getBoard.board);
-      setTime(0);
       setMineLocations(getBoard.mineLocation);
       setGameOver(false);
       setGameWin(false);
       setRestart(false);
+      // setMuted(false);
     };
 
     // Calling the function
@@ -60,6 +64,10 @@ const Board = () => {
         }
       }
       setGameOver(true);
+      handlePaused();
+      if (volume) {
+        audioGameOver();
+      }
     } else {
       // newBoardValues[x][y].revealed = true;
       newBoardValues = revealed(newBoardValues, x, y, newNonMinesCount);
@@ -68,6 +76,10 @@ const Board = () => {
       }
       if (newBoardValues.newNonMinesCount === 0) {
         setGameWin(true);
+        handlePaused();
+        if (volume) {
+          audioGameWin();
+        }
       }
       setBoard(newBoardValues.arr);
       setNonMinesCount(newBoardValues.newNonMinesCount);
@@ -82,16 +94,23 @@ const Board = () => {
 
   return (
     <StyledBoard>
-      {gameOver && <Modal reset={setRestart} gameState={"over"} />}
-      {gameWin && <Modal reset={setRestart} gameState={"win"} />}
-
+      {(gameOver || gameWin) && (
+        <Modal
+          reset={setRestart}
+          gameState={gameOver ? "over" : "win"}
+          handleReset={handleReset}
+          handlePaused={handlePaused}
+        />
+      )}
       <TopBar
         gameReset={gameOver || gameWin ? true : false}
         nonMinesCount={nonMinesCount}
         onChange={setOnLevelChange}
         defaultValue={level}
-        setTime={setTime}
-        newTime={newTime}
+        timer={timer}
+        handleReset={handleReset}
+        volume={volume}
+        setVolume={setVolume}
       />
       {board.map((row, indexRow) => {
         return (
@@ -103,6 +122,13 @@ const Board = () => {
                   data={singleCell}
                   updateBoard={updateBoard}
                   flagCell={flagCell}
+                  start={start}
+                  handleReset={handleReset}
+                  // handlePaused={handlePaused}
+                  volume={volume}
+                  audioRevealed={audioRevealed}
+                  audioGameOver={audioGameOver}
+                  timer={timer}
                 />
               );
             })}

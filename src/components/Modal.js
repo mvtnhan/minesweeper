@@ -3,13 +3,19 @@ import styled from "styled-components";
 import ImgLose from "../images/lose.png";
 import ImgWin from "../images/win.jpg";
 
-export default function Modal({ reset, gameState }) {
+export default function Modal({ reset, gameState, handleReset, handlePaused }) {
   const [render, setRender] = useState(false);
+
   useEffect(() => {
     setTimeout(() => {
       setRender(true);
     }, 1000);
   }, []);
+
+  const onReset = () => {
+    reset(render);
+    handleReset();
+  };
 
   return (
     <StyledModal
@@ -20,7 +26,7 @@ export default function Modal({ reset, gameState }) {
       {gameState === "over" && (
         <div>
           <div className="GameOverImage Img" />
-          <div className="TryAgain" onClick={() => reset(render)}>
+          <div className="TryAgain" onClick={onReset}>
             Try Again
           </div>
         </div>
@@ -29,7 +35,7 @@ export default function Modal({ reset, gameState }) {
       {gameState === "win" && (
         <div>
           <div className="NewGameImage Img" />
-          <div className="TryAgain" onClick={() => reset(render)}>
+          <div className="TryAgain" onClick={onReset}>
             New Game
           </div>
         </div>

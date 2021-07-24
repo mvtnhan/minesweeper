@@ -2,29 +2,34 @@ import React from "react";
 import styled from "styled-components";
 import { BOARD_GAME } from "../util/constants";
 import "antd/dist/antd.css";
-
+import formatTime from "../util/formatTime";
 import { Select } from "antd";
-import Timer from "./Timer";
-
 const { Option } = Select;
 
 const TopBar = ({
   onChange,
   defaultValue,
-  gameReset,
   nonMinesCount,
-  setTime,
+  timer,
+  handleReset,
+  volume,
+  setVolume,
 }) => {
+  const onReset = (newLevel) => {
+    handleReset();
+    onChange(newLevel);
+  };
+
+  const onChangeMuted = () => {
+    setVolume(!volume);
+  };
+
   return (
     <StyledTopBar>
-      <span className="Span" role="img" aria-label="flag">
-        ⬜ {nonMinesCount}
-      </span>
-
       <Select
         defaultValue={defaultValue}
         style={{ width: 96, touchAction: "none" }}
-        onChange={onChange}
+        onChange={onReset}
       >
         {Object.keys(BOARD_GAME).map((level) => {
           return (
@@ -34,10 +39,13 @@ const TopBar = ({
           );
         })}
       </Select>
-
-      <Timer gameReset={gameReset} sendTime={setTime} />
-
-      {/* <span>⛏️ 🤛🏻 🖱️ 🤜🏻 🏴‍☠️</span> */}
+      <span className="Span">⏰ {formatTime(timer)}</span>
+      <span className="Span" role="img" aria-label="flag">
+        ⬜ {nonMinesCount}
+      </span>
+      <span className="Span" style={{ width: "28px" }} onClick={onChangeMuted}>
+        {volume ? "🔊" : "🔈"}
+      </span>
     </StyledTopBar>
   );
 };
@@ -55,5 +63,8 @@ const StyledTopBar = styled.div`
   .Span {
     color: white;
     font-size: 20px;
+    :hover {
+      cursor: pointer;
+    }
   }
 `;

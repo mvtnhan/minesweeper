@@ -8,13 +8,13 @@ const BOARD_GAME = {
   Medium: {
     numRow: 12,
     numColumn: 14,
-    numBomb: 30,
+    numBomb: 35,
   },
 
   Hard: {
     numRow: 14,
     numColumn: 18,
-    numBomb: 50,
+    numBomb: 60,
   },
 };
 
