@@ -2,7 +2,7 @@ const BOARD_GAME = {
   Easy: {
     numRow: 8,
     numColumn: 10,
-    numBomb: 1,
+    numBomb: 10,
   },
 
   Medium: {
