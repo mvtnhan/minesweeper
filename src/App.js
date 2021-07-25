@@ -2,14 +2,14 @@ import React from "react";
 import styled from "styled-components";
 
 import "./App.css";
-import Board from "./components/Board.js";
+import Game from "./components/Game";
 import ImgBG from "./images/bg-game.jpg";
 
 const App = () => {
   return (
     <StyledApp>
       <h1>Minesweeper</h1>
-      <Board />
+      <Game />
     </StyledApp>
   );
 };
@@ -26,4 +26,8 @@ const StyledApp = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+
+  h1 {
+    margin-top: 16px;
+  }
 `;

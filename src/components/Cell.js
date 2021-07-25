@@ -1,18 +1,16 @@
 import React from "react";
 import styled from "styled-components";
+
 import { MINE_COLOR } from "../util/constants";
 
 const Cell = ({
   data,
   updateBoard,
   flagCell,
-  timer,
   start,
-  handleReset,
-  handlePaused,
   audioRevealed,
   audioGameOver,
-  volume,
+  isVolume,
 }) => {
   const styleColorBg = {
     color: numColorCode(data.value),
@@ -28,18 +26,15 @@ const Cell = ({
       return;
     }
 
-    if (!timer) {
-      if (data.value === "X") {
-        handleReset();
-        if (volume) {
-          audioGameOver();
-        }
+    if (!data.revealed) {
+      if (data.value === "X" && isVolume) {
+        audioGameOver();
       }
-      start();
+      start(true);
     }
 
     updateBoard(data.x, data.y);
-    if (!data.revealed && volume) {
+    if (!data.revealed && isVolume) {
       audioRevealed();
     }
   };

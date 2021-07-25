@@ -1,27 +1,30 @@
 import React from "react";
 import styled from "styled-components";
+
+import Timer from "./Timer";
+import Volume from "./Volume";
+
 import { BOARD_GAME } from "../util/constants";
+
 import "antd/dist/antd.css";
-import formatTime from "../util/formatTime";
 import { Select } from "antd";
 const { Option } = Select;
 
 const TopBar = ({
+  nonMinesCount,
   onChange,
   defaultValue,
-  nonMinesCount,
-  timer,
-  handleReset,
-  volume,
-  setVolume,
+  onResetTime,
+  isRunning,
+  setIsRunning,
+  isVolume,
+  setOnResetTime,
+  setIsVolume,
 }) => {
   const onReset = (newLevel) => {
-    handleReset();
     onChange(newLevel);
-  };
-
-  const onChangeMuted = () => {
-    setVolume(!volume);
+    setIsRunning(false);
+    setOnResetTime(true);
   };
 
   return (
@@ -39,13 +42,18 @@ const TopBar = ({
           );
         })}
       </Select>
-      <span className="Span">⏰ {formatTime(timer)}</span>
+
+      <Timer
+        isRunning={isRunning}
+        onReset={onResetTime}
+        setOnResetTime={setOnResetTime}
+      />
+
       <span className="Span" role="img" aria-label="flag">
         ⬜ {nonMinesCount}
       </span>
-      <span className="Span" style={{ width: "28px" }} onClick={onChangeMuted}>
-        {volume ? "🔊" : "🔈"}
-      </span>
+
+      <Volume isVolume={isVolume} setIsVolume={setIsVolume} />
     </StyledTopBar>
   );
 };
@@ -63,8 +71,5 @@ const StyledTopBar = styled.div`
   .Span {
     color: white;
     font-size: 20px;
-    :hover {
-      cursor: pointer;
-    }
   }
 `;

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import ImgLose from "../images/lose.png";
-import ImgWin from "../images/win.jpg";
 
-export default function Modal({ reset, gameState, handleReset, handlePaused }) {
+import ImgWin from "../images/win.jpg";
+import ImgLose from "../images/lose.png";
+
+export default function Modal({ setIsRestartGame, gameState, setOnResetTime }) {
   const [render, setRender] = useState(false);
 
   useEffect(() => {
@@ -13,8 +14,8 @@ export default function Modal({ reset, gameState, handleReset, handlePaused }) {
   }, []);
 
   const onReset = () => {
-    reset(render);
-    handleReset();
+    setOnResetTime(true);
+    setIsRestartGame(render);
   };
 
   return (
@@ -23,23 +24,17 @@ export default function Modal({ reset, gameState, handleReset, handlePaused }) {
         opacity: render ? 1 : 0,
       }}
     >
-      {gameState === "over" && (
-        <div>
+      <div>
+        {gameState ? (
           <div className="GameOverImage Img" />
-          <div className="TryAgain" onClick={onReset}>
-            Try Again
-          </div>
-        </div>
-      )}
-
-      {gameState === "win" && (
-        <div>
+        ) : (
           <div className="NewGameImage Img" />
-          <div className="TryAgain" onClick={onReset}>
-            New Game
-          </div>
+        )}
+
+        <div className="TryAgain" onClick={onReset}>
+          {gameState ? "Try Again" : "New Game"}
         </div>
-      )}
+      </div>
     </StyledModal>
   );
 }
