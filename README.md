@@ -1,5 +1,7 @@
 # A Minesweeper game using React Hooks
 
+![Minesweeper Game](https://raw.githubusercontent.com/mvtnhan/minesweeper/master/src/images/minesweeper.gif)
+
 Use Left Mouse Button to reveal cell or Right Mouse Button to flagge
 
 <p align="center"><img src="./src/images/playGame.png" alt="Game Minesweeper" /></p>
