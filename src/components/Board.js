@@ -100,11 +100,6 @@ const Board = ({
     let newBoardValues = JSON.parse(JSON.stringify(board));
     newBoardValues[x][y].flagged = !newBoardValues[x][y].flagged;
     setBoard(newBoardValues);
-    // if (newBoardValues[x][y].flagged) {
-    //   setMinesCount(minesCount - 1);
-    // } else {
-    //   setMinesCount(minesCount + 1);
-    // }
   };
 
   const handleShowGuide = () => {
@@ -125,13 +120,13 @@ const Board = ({
                   updateBoard={updateBoard}
                   flagCell={flagCell}
                   start={setIsRunning}
+                  gameOver={gameOver}
+                  minesCount={minesCount}
+                  setMinesCount={setMinesCount}
                   isVolume={isVolume}
                   audioRevealed={audioRevealed}
                   audioFlagged={audioFlagged}
                   audioGameOver={audioGameOver}
-                  gameOver={gameOver}
-                  minesCount={minesCount}
-                  setMinesCount={setMinesCount}
                 />
               );
             })}
