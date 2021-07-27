@@ -9,8 +9,12 @@ const Cell = ({
   flagCell,
   start,
   audioRevealed,
+  audioFlagged,
   audioGameOver,
   isVolume,
+  gameOver,
+  minesCount,
+  setMinesCount,
 }) => {
   const styleColorBg = {
     color: numColorCode(data.value),
@@ -22,7 +26,7 @@ const Cell = ({
   };
 
   const onClickUpdate = (e) => {
-    if (data.flagged) {
+    if (data.flagged || gameOver) {
       return;
     }
 
@@ -41,7 +45,17 @@ const Cell = ({
 
   const onClickFlag = (e) => {
     e.preventDefault();
-    flagCell(data.x, data.y);
+    !gameOver && flagCell(data.x, data.y);
+    if (!data.revealed && !gameOver) {
+      if (!data.flagged) {
+        setMinesCount(minesCount - 1);
+      } else {
+        setMinesCount(minesCount + 1);
+      }
+      if (isVolume) {
+        audioFlagged();
+      }
+    }
   };
 
   return (

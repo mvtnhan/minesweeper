@@ -5,7 +5,13 @@ import revealed from "../util/reveal";
 import createBoard from "../util/createBoard";
 
 import { BOARD_GAME } from "../util/constants";
-import { audioRevealed, audioGameOver, audioGameWin } from "../util/audio";
+import {
+  audioRevealed,
+  audioFlagged,
+  audioGameOver,
+  audioGameWin,
+} from "../util/audio";
+import Guide from "./Guide";
 
 const Board = ({
   setIsRunning,
@@ -15,11 +21,14 @@ const Board = ({
   isRestartGame,
   setIsRestartGame,
   level,
-  nonMinesCount,
-  setNonMinesCount,
+  setMinesCount,
+  minesCount,
+  gameOver,
 }) => {
   const [board, setBoard] = useState([]);
+  const [nonMinesCount, setNonMinesCount] = useState(0);
   const [mineLocations, setMineLocations] = useState([]);
+  const [showGuide, setShowGuide] = useState(true);
 
   useEffect(() => {
     const generateBoard = () => {
@@ -34,6 +43,7 @@ const Board = ({
         BOARD_GAME[level].numColumn * BOARD_GAME[level].numRow -
           BOARD_GAME[level].numBomb
       );
+      setMinesCount(BOARD_GAME[level].numBomb);
       setBoard(getBoard.board);
       setMineLocations(getBoard.mineLocation);
       setGameOver(false);
@@ -49,6 +59,7 @@ const Board = ({
     setGameOver,
     setGameWin,
     setNonMinesCount,
+    setMinesCount,
   ]);
 
   const updateBoard = (x, y, e) => {
@@ -89,9 +100,20 @@ const Board = ({
     let newBoardValues = JSON.parse(JSON.stringify(board));
     newBoardValues[x][y].flagged = !newBoardValues[x][y].flagged;
     setBoard(newBoardValues);
+    // if (newBoardValues[x][y].flagged) {
+    //   setMinesCount(minesCount - 1);
+    // } else {
+    //   setMinesCount(minesCount + 1);
+    // }
   };
+
+  const handleShowGuide = () => {
+    setShowGuide(false);
+  };
+
   return (
-    <div>
+    <div style={{ position: "relative" }} onClick={handleShowGuide}>
+      {showGuide && <Guide />}
       {board.map((row, indexRow) => {
         return (
           <div className="GridBoard" key={indexRow}>
@@ -105,7 +127,11 @@ const Board = ({
                   start={setIsRunning}
                   isVolume={isVolume}
                   audioRevealed={audioRevealed}
+                  audioFlagged={audioFlagged}
                   audioGameOver={audioGameOver}
+                  gameOver={gameOver}
+                  minesCount={minesCount}
+                  setMinesCount={setMinesCount}
                 />
               );
             })}

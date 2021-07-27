@@ -11,7 +11,6 @@ import { Select } from "antd";
 const { Option } = Select;
 
 const TopBar = ({
-  nonMinesCount,
   onChange,
   defaultValue,
   onResetTime,
@@ -20,6 +19,7 @@ const TopBar = ({
   isVolume,
   setOnResetTime,
   setIsVolume,
+  minesCount,
 }) => {
   const onReset = (newLevel) => {
     onChange(newLevel);
@@ -50,7 +50,7 @@ const TopBar = ({
       />
 
       <span className="Span" role="img" aria-label="flag">
-        ⬜ {nonMinesCount}
+        🏴‍☠️ {minesCount}
       </span>
 
       <Volume isVolume={isVolume} setIsVolume={setIsVolume} />
@@ -61,7 +61,7 @@ const TopBar = ({
 export default TopBar;
 
 const StyledTopBar = styled.div`
-  background: #4a752c;
+  background: #2d752c;
   padding: 10px 0;
   display: flex;
   flex-direction: row;

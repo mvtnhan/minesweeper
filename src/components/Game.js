@@ -12,7 +12,7 @@ const Game = () => {
   const [isVolume, setIsVolume] = useState(true);
   const [gameOver, setGameOver] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
-  const [nonMinesCount, setNonMinesCount] = useState(0);
+  const [minesCount, setMinesCount] = useState(0);
   const [level, setOnLevelChange] = useState("Medium");
 
   return (
@@ -25,7 +25,7 @@ const Game = () => {
         />
       )}
       <TopBar
-        nonMinesCount={nonMinesCount}
+        minesCount={minesCount}
         onChange={setOnLevelChange}
         defaultValue={level}
         onResetTime={onReset}
@@ -43,8 +43,9 @@ const Game = () => {
         isRestartGame={isRestartGame}
         setIsRestartGame={setIsRestartGame}
         level={level}
-        nonMinesCount={nonMinesCount}
-        setNonMinesCount={setNonMinesCount}
+        setMinesCount={setMinesCount}
+        minesCount={minesCount}
+        gameOver={gameOver}
       />
     </StyledGame>
   );

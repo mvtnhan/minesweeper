@@ -68,11 +68,13 @@ const StyledModal = styled.div`
   }
 
   .TryAgain {
+    position: relative;
+    z-index: 1;
     cursor: pointer;
     margin: 0 50px;
     border-radius: 7px;
     background: darkgreen;
-    color: rgb(158, 255, 158);
+    color: white;
     padding: 10px;
     font-weight: 700;
     text-align: center;
