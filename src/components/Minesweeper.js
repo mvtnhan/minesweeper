@@ -5,8 +5,7 @@ import Modal from "./Modal";
 import Board from "./Board";
 import TopBar from "./TopBar";
 
-const Game = () => {
-  const [isRestartGame, setIsRestartGame] = useState(false);
+const Minesweeper = () => {
   const [onReset, setOnReset] = useState(false);
   const [gameWin, setGameWin] = useState(false);
   const [isVolume, setIsVolume] = useState(true);
@@ -14,46 +13,47 @@ const Game = () => {
   const [isRunning, setIsRunning] = useState(false);
   const [minesCount, setMinesCount] = useState(0);
   const [level, setOnLevelChange] = useState("Medium");
+  const [isRestartGame, setIsRestartGame] = useState(false);
 
   return (
-    <StyledGame>
+    <StyledMinesweeper>
       {(gameOver || gameWin) && (
         <Modal
           gameState={gameOver}
-          setIsRestartGame={setIsRestartGame}
           setOnResetTime={setOnReset}
+          setIsRestartGame={setIsRestartGame}
         />
       )}
       <TopBar
-        minesCount={minesCount}
-        onChange={setOnLevelChange}
         defaultValue={level}
+        onChange={setOnLevelChange}
+        minesCount={minesCount}
         onResetTime={onReset}
+        setOnResetTime={setOnReset}
         isRunning={isRunning}
         setIsRunning={setIsRunning}
-        setOnResetTime={setOnReset}
         isVolume={isVolume}
         setIsVolume={setIsVolume}
       />
       <Board
+        level={level}
+        gameOver={gameOver}
+        isRestartGame={isRestartGame}
+        setIsRestartGame={setIsRestartGame}
         setIsRunning={setIsRunning}
         setGameOver={setGameOver}
         setGameWin={setGameWin}
         isVolume={isVolume}
-        isRestartGame={isRestartGame}
-        setIsRestartGame={setIsRestartGame}
-        level={level}
-        setMinesCount={setMinesCount}
         minesCount={minesCount}
-        gameOver={gameOver}
+        setMinesCount={setMinesCount}
       />
-    </StyledGame>
+    </StyledMinesweeper>
   );
 };
 
-export default Game;
+export default Minesweeper;
 
-const StyledGame = styled.div`
+const StyledMinesweeper = styled.div`
   box-shadow: 0 4px 3px rgba(0, 0, 0, 0.3);
   position: relative;
 

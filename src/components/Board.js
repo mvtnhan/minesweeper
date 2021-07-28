@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import Cell from "./Cell";
+import Guide from "./Guide";
 import revealed from "../util/reveal";
 import createBoard from "../util/createBoard";
 
@@ -11,19 +12,18 @@ import {
   audioGameOver,
   audioGameWin,
 } from "../util/audio";
-import Guide from "./Guide";
 
 const Board = ({
-  setIsRunning,
-  setGameOver,
-  setGameWin,
+  level,
   isVolume,
+  setIsRunning,
+  setGameWin,
   isRestartGame,
   setIsRestartGame,
-  level,
-  setMinesCount,
   minesCount,
+  setMinesCount,
   gameOver,
+  setGameOver,
 }) => {
   const [board, setBoard] = useState([]);
   const [nonMinesCount, setNonMinesCount] = useState(0);
@@ -53,13 +53,13 @@ const Board = ({
 
     generateBoard();
   }, [
-    isRestartGame,
-    setIsRestartGame,
     level,
-    setGameOver,
     setGameWin,
-    setNonMinesCount,
+    setGameOver,
     setMinesCount,
+    isRestartGame,
+    setNonMinesCount,
+    setIsRestartGame,
   ]);
 
   const updateBoard = (x, y, e) => {
@@ -121,8 +121,8 @@ const Board = ({
                   flagCell={flagCell}
                   start={setIsRunning}
                   gameOver={gameOver}
-                  minesCount={minesCount}
                   setMinesCount={setMinesCount}
+                  minesCount={minesCount}
                   isVolume={isVolume}
                   audioRevealed={audioRevealed}
                   audioFlagged={audioFlagged}

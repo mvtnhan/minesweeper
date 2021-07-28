@@ -8,11 +8,11 @@ const Cell = ({
   updateBoard,
   flagCell,
   start,
+  gameOver,
+  isVolume,
   audioRevealed,
   audioFlagged,
   audioGameOver,
-  isVolume,
-  gameOver,
   minesCount,
   setMinesCount,
 }) => {

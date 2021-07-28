@@ -11,7 +11,6 @@ const Guide = () => {
 
   useEffect(() => {
     countRef.current = setInterval(() => setShowImgA(!showImgA), 1500);
-    console.log("showImgA", showImgA);
 
     return () => clearInterval(countRef.current);
   }, [showImgA]);

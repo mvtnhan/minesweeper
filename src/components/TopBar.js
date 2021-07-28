@@ -11,15 +11,15 @@ import { Select } from "antd";
 const { Option } = Select;
 
 const TopBar = ({
-  onChange,
   defaultValue,
-  onResetTime,
+  minesCount,
+  onChange,
   isRunning,
   setIsRunning,
-  isVolume,
+  onResetTime,
   setOnResetTime,
+  isVolume,
   setIsVolume,
-  minesCount,
 }) => {
   const onReset = (newLevel) => {
     onChange(newLevel);

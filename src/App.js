@@ -2,14 +2,14 @@ import React from "react";
 import styled from "styled-components";
 
 import "./App.css";
-import Game from "./components/Game";
+import Minesweeper from "./components/Minesweeper";
 import ImgBG from "./images/bg-game.jpg";
 
 const App = () => {
   return (
     <StyledApp>
       <h1>Minesweeper</h1>
-      <Game />
+      <Minesweeper />
     </StyledApp>
   );
 };
